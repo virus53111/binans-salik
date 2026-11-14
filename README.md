@@ -7,7 +7,7 @@
 
 | Проект | Где лежит код | Где работает сайт | Статус |
 | --- | --- | --- | --- |
-| **CenaRadar** — ремонт, цены и калькуляторы в Латвии | [Salik](https://github.com/virus53111/Salik) · [карточка](https://github.com/virus53111/Salik/blob/main/PROJECT_INFO.md) | [cenaradar.online](https://cenaradar.online/) · Render | **ДЕЙСТВУЕТ**. Код в Salik. Связь с Render требует проверки |
+| **CenaRadar** — ремонт, цены и калькуляторы в Латвии | [Salik](https://github.com/virus53111/Salik) · [карточка](https://github.com/virus53111/Salik/blob/main/PROJECT_INFO.md) | [cenaradar.online](https://cenaradar.online/) · Render | **ДЕЙСТВУЕТ**. Код в Salik. Старые файлы GitHub Pages удалены; связь с Render требует проверки |
 | **Murdilimax — The Answer Atlas** — многоязычный справочник | [dogizen](https://github.com/virus53111/dogizen) · [карточка](https://github.com/virus53111/dogizen/blob/main/PROJECT_INFO.md) | [murdilimax.com](https://murdilimax.com/) · GitHub Pages | **ДЕЙСТВУЕТ**. Сборка и публикация из dogizen/main |
 
 **Правило:** Murdilimax обновлять **только в `dogizen`**. CenaRadar редактировать в `Salik`; до переименования или изменения хостинга проверить Render → Settings → Build & Deploy.
@@ -24,7 +24,7 @@
 
 | Название | Репозиторий | Статус |
 | --- | --- | --- |
-| **Старая публикация Murdilimax** | [binance-box-2](https://github.com/virus53111/binance-box-2) · [карточка](https://github.com/virus53111/binance-box-2/blob/main/PROJECT_INFO.md) | **LEGACY**. Последние публикации проваливались. Периодический автозапуск выключен; файлы и Pages настройки сохранены до окончательной проверки домена |
+| **Старая публикация Murdilimax** | [binance-box-2](https://github.com/virus53111/binance-box-2) · [карточка](https://github.com/virus53111/binance-box-2/blob/main/PROJECT_INFO.md) | **АРХИВ**. Неудачный старый workflow и устаревший CNAME удалены; старую страницу GitHub Pages ещё можно открыть отдельно |
 | **CryptoBox** | [binance-box](https://github.com/virus53111/binance-box) · [карточка](https://github.com/virus53111/binance-box/blob/main/PROJECT_INFO.md) | **АРХИВ** пакетов расширения браузера |
 | **Astro + Netlify** | [astro-platform-starter](https://github.com/virus53111/astro-platform-starter) · [карточка](https://github.com/virus53111/astro-platform-starter/blob/main/PROJECT_INFO.md) | **ШАБЛОН** для новых сайтов |
 
@@ -50,7 +50,7 @@
 | `binance-box` | `cryptobox-extension-archive` |
 | `binans-salik` | `future-project-reserve` |
 
-**Пока не удалять и не переносить репозитории с кодом.** Перед очисткой старого `binance-box-2` проверить **Settings → Pages → Custom domain** у него и у `dogizen`. В действующем `dogizen` GitHub Actions успешно выполнил публикацию 14.11.2026; старые периодические запуски `binance-box-2` после повторяющихся ошибок выключены.
+**Не удалять или переносить оставшийся код без проверки.** Проверка публичных адресов: `virus53111.github.io/dogizen/` переводит на `murdilimax.com`, а `virus53111.github.io/binance-box-2/` остаётся старым отдельным сайтом. Старую страницу можно при необходимости отключить через **Settings → Pages**. В действующем `dogizen` GitHub Actions успешно выполнил публикацию 14.11.2026. Старые workflow и CNAME в `binance-box-2` удалены; старые GitHub Pages-файлы в `Salik` удалены. Оба действующих сайта после изменений проверены.
 
 ---
 
