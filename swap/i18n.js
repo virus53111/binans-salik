@@ -5,6 +5,14 @@
 
   const ru = {
     "Murdilimax — Cross-chain crypto swaps": "Murdilimax — обмен криптовалют",
+    "Guides": "Инструкции",
+    "LEARN BEFORE YOU SWAP": "РАЗБЕРИТЕСЬ ПЕРЕД ОБМЕНОМ",
+    "15 crypto swap guides, no guesswork.": "15 инструкций по обмену криптовалют без догадок.",
+    "Understand BTC and ETH swaps, stablecoin networks, wallet permissions, fees and transaction delays. Each guide is available in English and Russian, with links to official sources.": "Разберитесь в обмене BTC и ETH, сетях стейблкоинов, разрешениях кошелька, комиссиях и задержках транзакций. Все материалы доступны на русском и английском и ссылаются на официальные источники.",
+    "Browse all 15 guides": "Открыть все 15 статей",
+    "BTC to ETH": "BTC на ETH",
+    "Understand fees": "Разобраться в комиссиях",
+    "15 swap guides": "15 инструкций по обмену",
     "Exchange": "Обмен",
     "Assets": "Валюты",
     "How it works": "Как это работает",
@@ -135,6 +143,13 @@
           el.setAttribute(attr, lang === "ru" ? (ruAttributes[originals[attr]] || originals[attr]) : originals[attr]);
         }
       });
+    });
+    // Follow the selected UI language when navigating to educational articles.
+    // Keep the explicit Russian-language shortcut intact in both modes.
+    document.querySelectorAll('a[href^="/guides/"],a[href^="/ru/guides/"]').forEach(anchor => {
+      if (anchor.hasAttribute("data-locale-fixed")) return;
+      const path = anchor.getAttribute("href").replace(/^\/ru\/guides\//, "/guides/");
+      anchor.setAttribute("href", lang === "ru" ? "/ru" + path : path);
     });
     for (const code of ["ru","en"]) {
       if (controls[code]) controls[code].setAttribute("aria-pressed", String(code===lang));
