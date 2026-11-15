@@ -31,6 +31,7 @@
     "You send": "Отдаёте",
     "Balance: —": "Баланс: —",
     "You receive": "Получаете",
+    "Set the amount in the THORChain widget": "Укажите сумму в виджете THORChain",
     "Live quote available in the exchange": "Курс и итоговая сумма — в окне обмена",
     "Affiliate commission": "Партнёрская комиссия",
     "Swap crypto": "Обменять",
