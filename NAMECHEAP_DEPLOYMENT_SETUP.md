@@ -1,37 +1,28 @@
-# Namecheap deployment handoff — three isolated websites
+# Website hosting and deployment
 
-Updated 2026-11-15. This file documents the **prepared but deliberately disabled** GitHub Actions deployments. No website has been migrated or changed by these workflows yet.
+Status recorded 2026-11-15. The workflow changes in this branch validate builds. Production deployment remains disabled pending the SSH and staging tests.
 
-| Domain | Source repository | Deployment workflow | Source folder / build | Current publishing to keep until tested |
-| --- | --- | --- | --- | --- |
-| murdilimax.com | virus53111/dogizen | .github/workflows/namecheap-deploy.yml | npm run build → dist/ | GitHub Pages |
-| cenaradar.online | virus53111/Salik | .github/workflows/namecheap-deploy.yml | tracked web content from repo root | Render (connection still needs verification) |
-| murdilimax-swap.com | virus53111/binans-salik | .github/workflows/namecheap-swap-deploy.yml | node swap/build.cjs → swap/dist/ | Existing live destination must be verified |
+| Website | Source of truth | Public serving destination | Namecheap document root relative to hosting account |
+| --- | --- | --- | --- |
+| [Murdilimax — The Answer Atlas](https://murdilimax.com/) | [dogizen](https://github.com/virus53111/dogizen), main | GitHub Pages while registrar transfer is pending | `murdilimax.com/` |
+| [CenaRadar](https://cenaradar.online/) | [Salik](https://github.com/virus53111/Salik), main | Namecheap, with the Render publication retained during verification and for rollback | `cenaradar.online/` |
+| [Murdilimax Swap](https://murdilimax-swap.com/) | [binans-salik](https://github.com/virus53111/binans-salik), main, `swap/` | Namecheap, with the Render publication retained for rollback | `public_html/` |
 
-Do **not** use the old Murdilimax Forms project for murdilimax.com.
+Murdilimax Forms on Hatchable is a separate application. Never select it as the source for Answer Atlas.
 
-## What is finished
-- Three GitHub workflows exist, separated by repository/domain.
-- Each runs after a push to main **only when** the repository variable `NAMECHEAP_DEPLOY_ENABLED` is set to `true`. It can also be started manually once enabled.
-- Each checks the destination directory and demands a site-specific remote file `.deploy-domain` with exactly its domain name. This prevents accidental uploads into an unverified hosting folder.
-- Uploads use SSH and rsync without `--delete` and do not update DNS.
+## Workflow entry points
 
-## Connection requirements (not done yet)
-1. Identify the correct domain's document root in Namecheap cPanel → Domains. Take backups before publishing.
-2. Verify a Namecheap hosting package exists and SSH access is enabled (cPanel → Manage Shell; shared hosting port often 21098).
-3. Set up a **dedicated deployment SSH key pair**. Authorize the public key in cPanel; put the private key only in GitHub Actions secrets. Never paste the private key, password, API key, or recovery codes into chat or a repository.
-4. Obtain and independently verify the server's SSH host key fingerprint. Store the matching known_hosts line as an Actions secret (do not blindly trust an unverified ssh-keyscan output).
-5. Place `.deploy-domain` containing only the domain name (e.g. `murdilimax.com`) in each correct document root.
-6. In the **correct source repository** → Settings → Secrets and variables → Actions, add repository secrets:
-   - `NAMECHEAP_SSH_HOST` — actual Namecheap server hostname
-   - `NAMECHEAP_SSH_USER` — cPanel SSH username
-   - `NAMECHEAP_SSH_PORT` — normally 21098 on shared hosting (confirm for plan)
-   - `NAMECHEAP_SSH_KEY` — dedicated private SSH deploy key
-   - `NAMECHEAP_SSH_KNOWN_HOSTS` — verified known_hosts entry for that hostname and port
-   - `NAMECHEAP_SITE_DIR` — exact document root, e.g. /home/account/public_html/other-domain (no trailing slash)
-   - For `binans-salik` only: `THORCHAIN_AFFILIATE_KEY` (the widget exposes this identifier client-side; never supply wallet private keys or signing secrets)
-7. After verifying the target and taking a backup, add repository **variable** `NAMECHEAP_DEPLOY_ENABLED` = `true`; trigger the workflow manually once, verify the result, then ordinary pushes to main will deploy automatically.
+- [Answer Atlas](https://github.com/virus53111/dogizen/actions/workflows/namecheap-deploy.yml) builds `dist/` using Node.js 22 and `npm run build`. Keep the GitHub Pages workflow and current DNS through cutover.
+- [CenaRadar](https://github.com/virus53111/Salik/actions/workflows/namecheap-deploy.yml) builds `dist/` with the tracked site files, the existing analytics consent code, and the custom 404. The previous Render publication was built by `dogizen:price-aggregator-mvp` from pinned Salik source.
+- [Swap](https://github.com/virus53111/binans-salik/actions/workflows/namecheap-swap-deploy.yml) builds `swap/dist/` using `node swap/build.cjs`. The validation job uses synthetic client configuration. Production reads the existing `THORCHAIN_AFFILIATE_KEY` from an Actions secret. The client value becomes visible to visitors by design. Keep wallet and signing credentials out of this workflow.
 
-Security: Do not copy account-wide or application signing credentials into GitHub. The SSH deploy key has broad cPanel access, so keep it restricted, stored only as a GitHub secret, and rotate if exposed. The workflows do not delete old remote files; obsolete pages may need careful cleanup after migration.
+## Activation and rollback
 
-Registrar transfer vs hosting: Transferring a domain registration to Namecheap does **not** automatically move its DNS or files. Leave the current GitHub Pages / Render domain routing unchanged until the Namecheap copy is verified. DNS changes, SSL and redirects are separate cutover steps.
+1. Resolve the intended account and target document root in cPanel. Keep archived release files and DNS snapshots outside the web roots.
+2. Confirm each target and scope before authorizing dedicated SSH deployment access. Establish the server fingerprint independently and pin it in known_hosts.
+3. Run a manual deployment to a separate test destination and verify the served release. Validate target-specific constraints on the server before granting production access.
+4. Add a `.deploy-domain` marker with exactly the expected domain to each verified production directory. Set `NAMECHEAP_SSH_HOST`, `NAMECHEAP_SSH_USER`, `NAMECHEAP_SSH_PORT`, `NAMECHEAP_SSH_KEY`, `NAMECHEAP_SSH_KNOWN_HOSTS`, and `NAMECHEAP_SITE_DIR` only in the respective repository's Actions settings. Keep confidential values out of source and logs.
+5. Set the repository variable `NAMECHEAP_DEPLOY_ENABLED` only after the deployment test and recovery check. Production runs on main. Uploads retain destination files and delay replacing files until transmission finishes. DNS and certificates are managed separately.
+6. For a bad release, restore the saved files for that site. If DNS was changed during migration, retain the previous hosting service and use the saved records to restore its routing.
+
+The Hatchable Forms projects, the Hatchable CenaRadar and Swap projects, and the Render design previews are distinct from the three public sites. Check their domains, APIs, stored data, and references before any archival or deletion.
