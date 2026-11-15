@@ -60,7 +60,7 @@
     "Product": "Сервис",
     "Information": "Информация",
     "Risk notice": "Предупреждение о рисках",
-    "Contact (coming soon)": "Помощь и информация",
+    "Help & information": "Помощь и информация",
     "Project": "Проект",
     "THORChain widget integration": "Интеграция с THORChain",
     "Murdilimax. All rights reserved.": "Murdilimax. Все права защищены.",
@@ -78,6 +78,7 @@
   };
 
   const ruAttributes = {
+    "Language": "Язык",
     "Main navigation": "Основная навигация",
     "Murdilimax home": "Главная Murdilimax",
     "Open menu": "Открыть меню",
