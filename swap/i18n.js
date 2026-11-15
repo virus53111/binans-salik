@@ -18,7 +18,7 @@
     "How it works": "Как это работает",
     "Official THORChain exchange widget · Connect your wallet when swapping": "Официальный виджет THORChain · Подключение кошелька при обмене",
     "You send": "Отдаёте",
-    "Balance: —": "Баланс: —",
+    "Set the amount in the THORChain widget": "Укажите сумму в виджете THORChain",
     "You receive": "Получаете",
     "Live quote available in the exchange": "Курс и итоговая сумма — в окне обмена",
     "Affiliate commission": "Партнёрская комиссия",
