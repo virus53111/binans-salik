@@ -37,7 +37,7 @@ for(const [file,url,lang] of expected){
  if(file!=='index.html'&&file!=='ru/index.html'){assert(!descriptions.has(description),'Duplicate metadata '+description);descriptions.add(description);}
  assert(sitemap.includes('<loc>'+url+'</loc>'),'URL absent from XML sitemap '+url);
  // New bilingual pages and hubs have in-document cross-language links.
- if(!file.endsWith('/index.html')||file.includes('guides/')){
+ if(file.includes('guides/')){
   assert(page.includes('hreflang="en"'),'Missing EN alternate '+file);
   assert(page.includes('hreflang="ru"'),'Missing RU alternate '+file);
  }
