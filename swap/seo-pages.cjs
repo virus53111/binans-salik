@@ -110,7 +110,9 @@ function document({lang,title,description,canonical,h1,lead,sections,links,guide
  const other=lang==='en'?'ru':'en';
  const rel=canonical.slice(base.length);
  const otherRel=lang==='en'?'/ru'+rel:rel.replace(/^\/ru/,'');
- const alternate=guideIndex>=0?'<link rel="alternate" hreflang="'+other+'" href="'+base+otherRel+'"/>':'';
+ const alternate='<link rel="alternate" hreflang="'+other+'" href="'+base+otherRel+'">' +
+  '<link rel="alternate" hreflang="'+lang+'" href="'+canonical+'">' +
+  '<link rel="alternate" hreflang="x-default" href="'+(lang==='en'?canonical:base+otherRel)+'">';
  const c=copy[lang];
  const structured={
    '@context':'https://schema.org','@type':'WebPage',
@@ -128,7 +130,6 @@ function document({lang,title,description,canonical,h1,lead,sections,links,guide
   '<title>'+esc(title)+'</title><meta name="description" content="'+esc(description)+'">'+
   '<meta name="robots" content="index,follow,max-image-preview:large">'+
   '<link rel="canonical" href="'+canonical+'">'+alternate+
-  (guideIndex>=0?'<link rel="alternate" hreflang="'+lang+'" href="'+canonical+'">':'')+
   '<meta property="og:type" content="article"><meta property="og:site_name" content="Murdilimax Swap">'+
   '<meta property="og:title" content="'+esc(title)+'"><meta property="og:description" content="'+esc(description)+'">'+
   '<meta property="og:url" content="'+canonical+'"><meta name="twitter:card" content="summary">'+
