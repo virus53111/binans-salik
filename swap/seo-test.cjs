@@ -70,7 +70,7 @@ for(const g of added){
   }
   assert(page.includes('href="/#swap-widget"'),'CTA must lead to existing verified exchange entry '+g.slug);
   assert(page.includes('href="'+(lang==='ru'?'/ru/guides/':'/guides/')+'"'),'No link to topic hub '+g.slug);
-  assert(page.includes('item')===false||true); // deliberately no unearned ratings or review claims
+  assert(!page.includes('"@type":"AggregateRating"')&&!page.includes('"@type":"Review"'),'No fabricated reviews '+g.slug);
   assert(!/1 BTC\s*=\s*[0-9]/.test(page),'No invented live exchange rates '+g.slug);
   assert(page.includes('"@type":"Article"'),'Article schema missing '+g.slug);
  }
