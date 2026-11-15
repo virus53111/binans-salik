@@ -6,6 +6,9 @@
   const ru = {
     "Murdilimax — Cross-chain crypto swaps": "Murdilimax — обмен криптовалют",
     "Guides": "Инструкции",
+    "Buy crypto": "Купить криптовалюту",
+    "Buy crypto on Bybit": "Купить криптовалюту на Bybit",
+    "Bybit is an external service · Referral link · Availability varies by location": "Bybit — сторонний сервис · Партнёрская ссылка · Доступность зависит от страны",
     "LEARN BEFORE YOU SWAP": "РАЗБЕРИТЕСЬ ПЕРЕД ОБМЕНОМ",
     "15 crypto swap guides, no guesswork.": "15 инструкций по обмену криптовалют без догадок.",
     "Understand BTC and ETH swaps, stablecoin networks, wallet permissions, fees and transaction delays. Each guide is available in English and Russian, with links to official sources.": "Разберитесь в обмене BTC и ETH, сетях стейблкоинов, разрешениях кошелька, комиссиях и задержках транзакций. Все материалы доступны на русском и английском и ссылаются на официальные источники.",
