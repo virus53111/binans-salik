@@ -23,4 +23,6 @@ fs.writeFileSync(
 fs.writeFileSync(path.join(outputDir, ".nojekyll"), "");
 // Generate the sitemap, robots.txt and real bilingual informational pages.
 require("./seo-pages.cjs").writeSEOPages(outputDir);
+// Expand the original two guides into a 15-topic bilingual library with source links.
+require("./seo-cluster-render.cjs").writeSEOCluster(outputDir);
 console.log("Murdilimax Swap static bundle generated (API key masked).");
