@@ -5,7 +5,7 @@ const root=path.join(__dirname,'dist'),base='https://murdilimax-swap.com';
 const html=p=>fs.readFileSync(path.join(root,p),'utf8');
 assert.equal(all.length,16,'Exactly 16 original article intents');
 assert.equal(added.length,14,'Exactly 14 newly researched articles');
-assert.equal(new Set(all.map(g=>g.slug)).size,15,'No repeated slugs');
+assert.equal(new Set(all.map(g=>g.slug)).size,all.length,'No repeated slugs');
 assert.deepEqual(all.reduce((map,g)=>(map[g.category]=(map[g.category]||0)+1,map),{}),
  {howto:5,safety:5,pairs:6},'Expected useful mix: 6 pairs, 5 instructions, 5 safety');
 const expected=[
