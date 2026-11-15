@@ -21,10 +21,13 @@ for(const g of all){
  }
 }
 const titles=new Set(),descriptions=new Set();
+const buyHref='https://www.bybit.com/invite?ref=XV9EBA&amp;medium=referral&amp;utm_campaign=evergreen';
 const sitemap=html('sitemap.xml');
 for(const [file,url,lang] of expected){
  const page=html(file);
  assert.match(page,/<h1\b/i,'H1 missing '+file);
+ assert(page.includes('href="'+buyHref+'" target="_blank" rel="sponsored noopener noreferrer"'),'Missing sponsored external Bybit purchase link '+file);
+ assert(page.includes(lang==='ru'?'Купить криптовалюту на Bybit':'Buy crypto on Bybit'),'Buy label missing in language '+file);
  assert(page.includes('<html lang="'+lang+'">'),'HTML language missing '+file);
  assert(page.includes('<link rel="canonical" href="'+url+'"'),'Canonical URL missing '+file);
  assert(/<meta name="description" content="[^"]{65,240}"/.test(page),'Description too short '+file);
@@ -80,9 +83,11 @@ assert(homepage.includes('href="/guides/"'),'English homepage must link guide hu
 assert(homepage.includes('href="/ru/guides/"'),'English homepage must link Russian hub');
 assert(homepage.includes('href="/guides/swap-btc-to-eth/"'),'Pair page not discoverable from homepage');
 assert(homepage.includes('src="./widget.js"'),'Original widget hook must survive');
+assert(homepage.includes('Bybit is an external service · Referral link'),'External partner notice missing on homepage');
 assert(homepage.includes('src="./config.js"'),'Original affiliate config hook must survive');
 const i18n=html('i18n.js');
 assert(i18n.includes('"Guides": "Инструкции"')&&i18n.includes('data-locale-fixed'),'Missing localized navigation logic');
+assert(i18n.includes('"Buy crypto on Bybit": "Купить криптовалюту на Bybit"'),'Russian Bybit CTA translation missing');
 for(const asset of ['widget.js','i18n.js','config.js'])assert(fs.existsSync(path.join(root,asset)),asset+' missing');
 const guidePaths=expected.map(x=>x[0]);
 assert.equal(new Set(guidePaths).size,expected.length,'Physical file path collision');

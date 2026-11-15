@@ -15,6 +15,8 @@ const copy = {
     home: 'Crypto swap interface',
     langSwitch: 'Русский',
     swap: 'Explore swap interface',
+    buy:'Buy crypto on Bybit',
+    buyNote:'External service · Referral link · Availability varies by location',
     learn: 'Learn before swapping',
     disclaimer: 'Murdilimax is an independent interface to an externally hosted THORChain widget. The external service handles quotes, wallet authorization and execution. This information is educational, not financial advice. Assets and routes may be unavailable, and losses are possible.',
     navigation: 'Guides and safety',
@@ -57,6 +59,8 @@ const copy = {
     home: 'Обмен криптовалют',
     langSwitch: 'English',
     swap: 'Перейти к обмену',
+    buy:'Купить криптовалюту на Bybit',
+    buyNote:'Сторонний сервис · Партнёрская ссылка · Доступность зависит от страны',
     learn: 'Разберитесь перед обменом',
     disclaimer: 'Murdilimax — независимый интерфейс к внешнему виджету THORChain. Котировки, подтверждение операций кошельком и выполнение обменов обеспечивает внешний сервис. Информация носит справочный характер и не является инвестиционной рекомендацией. Маршруты могут быть недоступны, а операции сопряжены с рисками.',
     navigation: 'Инструкции и безопасность',
@@ -131,10 +135,10 @@ function document({lang,title,description,canonical,h1,lead,sections,links,guide
   '<script type="application/ld+json">'+JSON.stringify(structured).replace(/</g,'\\u003c')+'</script>'+
   '<style>*{box-sizing:border-box}body{margin:0;font:17px/1.75 system-ui,Arial,sans-serif;background:radial-gradient(ellipse at 40% 0,#1b1d49 0,transparent 55%),#080916;color:#eef3ff}a{color:#85d7ff}nav{max-width:1120px;margin:auto;padding:24px;display:flex;gap:24px;flex-wrap:wrap}nav a{color:#ceddff;text-decoration:none}nav a:hover{text-decoration:underline}main{max-width:840px;padding:24px 24px 84px;margin:auto}h1{font-size:clamp(2.2rem,5vw,3.5rem);line-height:1.15;letter-spacing:-.04em}h2{font-size:1.5rem;line-height:1.3;margin:35px 0 12px}p{color:#ccd3ee}.lead{font-size:1.16rem;color:#e1e7fc}.eyebrow{font-size:.8rem;color:#9be1fa;text-transform:uppercase;letter-spacing:.13em;font-weight:bold}.cta{display:inline-block;margin:18px 0;padding:12px 22px;background:linear-gradient(110deg,#2565d5,#8454d9);border-radius:12px;color:white;text-decoration:none;font-weight:700}.panel{margin-top:45px;padding:20px 24px;background:#161a36;border:1px solid #475481;border-radius:16px}.panel p{font-size:.9rem}.panel a{display:inline-block;margin:4px 18px 4px 0}footer{padding:24px;text-align:center;font-size:.9rem;border-top:1px solid #36405e;color:#bdc4db}</style>'+
   '</head><body><nav aria-label="Navigation"><a href="/"><strong>MURDILIMAX SWAP</strong></a>'+
-  '<a href="/#swap-widget">'+esc(c.home)+'</a>'+alternateButton+'</nav>'+
+  '<a href="/#swap-widget">'+esc(c.home)+'</a><a href="https://www.bybit.com/invite?ref=XV9EBA&amp;medium=referral&amp;utm_campaign=evergreen" target="_blank" rel="sponsored noopener noreferrer">'+esc(c.buy)+'</a>'+alternateButton+'</nav>'+
   '<main><p class="eyebrow">'+esc(c.learn)+'</p><h1>'+esc(h1)+'</h1>'+
   '<p class="lead">'+esc(lead)+'</p>'+
-  '<a class="cta" href="/#swap-widget">'+esc(c.swap)+'</a>'+
+  '<a class="cta" href="/#swap-widget">'+esc(c.swap)+'</a> <a class="cta" href="https://www.bybit.com/invite?ref=XV9EBA&amp;medium=referral&amp;utm_campaign=evergreen" target="_blank" rel="sponsored noopener noreferrer">'+esc(c.buy)+' ↗</a><p>'+esc(c.buyNote)+'</p>'+
   sectionMarkup+
   '<aside class="panel"><h2>'+esc(c.navigation)+'</h2>'+guideLinks+'<p>'+esc(c.disclaimer)+'</p></aside>'+
   '</main><footer>© Murdilimax Swap · '+esc(c.disclaimer)+'</footer></body></html>';
