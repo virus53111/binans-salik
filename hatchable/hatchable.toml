@@ -1,0 +1,10 @@
+# Murdilimax Swap: owner-managed partner API credential.
+# Never put the key in HTML, JS, GitHub, or messages.
+[[api]]
+name = "thorchain"
+auth = "api_key"
+base_url = "https://api.thorchain.org/v1"
+key_header = "x-api-key"
+key_prefix = ""
+description = "Private THORChain affiliate API credential for future wallet-based swaps. Paste in Setup, not source."
+required = false
