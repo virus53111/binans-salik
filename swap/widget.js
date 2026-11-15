@@ -27,6 +27,15 @@
     if(!assets[source]||!assets[dest]||source===dest){window.alert("Choose different supported assets first.");return;}
     if(!/^[a-fA-F0-9]{64}$/.test(affiliateWidgetKey)){window.alert("Swap temporarily unavailable — affiliate integration is not configured.");return;}
     const params=new URLSearchParams({apiKey:affiliateWidgetKey,from:assets[source],to:assets[dest],theme:"dark"});
+    const isRu=window.MURDILIMAX_LANGUAGE==="ru";
+    const topSubtitle=document.querySelector("#murdilimax-widget-top span");
+    if(topSubtitle)topSubtitle.textContent=isRu?"Обмен через официальный виджет THORChain":"Official THORChain wallet-powered exchange";
+    const closeButton=document.getElementById("murdilimax-widget-close");
+    if(closeButton)closeButton.textContent=isRu?"✕ Закрыть":"✕ Close";
+    const footer=document.getElementById("murdilimax-widget-footer");
+    if(footer)footer.innerHTML=isRu
+      ? 'Работает на THORChain. Перед подтверждением проверьте курс, сетевые комиссии и разрешения кошелька. Маршруты и выплата партнёрских 0,3% зависят от фактического выполнения обмена. <a href="https://swap.thorchain.org/" target="_blank" rel="noopener noreferrer">Официальный сайт</a>'
+      : 'Powered by THORChain. Review rates, network fees and wallet permissions before signing. Provider availability and 0.3% affiliate payouts are subject to protocol execution. <a href="https://swap.thorchain.org/" target="_blank" rel="noopener noreferrer">Official site</a>';
     previousFocus=document.activeElement;
     overlay.classList.add("is-open");
     document.body.style.overflow="hidden";
