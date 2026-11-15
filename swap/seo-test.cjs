@@ -26,10 +26,10 @@ for(const [file,url,lang] of expected){
  const page=html(file);
  assert.match(page,/<h1\b/i,'H1 missing '+file);
  assert(page.includes('<html lang="'+lang+'">'),'HTML language missing '+file);
- assert(page.includes('<link rel="canonical" href="'+url+'">'),'Canonical URL missing '+file);
+ assert(page.includes('<link rel="canonical" href="'+url+'"'),'Canonical URL missing '+file);
  assert(/<meta name="description" content="[^"]{65,240}"/.test(page),'Description too short '+file);
  assert(!page.includes('name="robots" content="noindex'),'Search indexing accidentally disabled '+file);
- assert(page.includes('<meta property="og:url" content="'+url+'">'),'OG link wrong '+file);
+ assert(page.includes('<meta property="og:url" content="'+url+'"'),'OG link wrong '+file);
  const title=page.match(/<title>([^<]+)<\/title>/)?.[1];
  assert(title,'No title '+file);
  if(file!=='index.html'&&file!=='ru/index.html'){assert(!titles.has(title),'Duplicate title '+title);titles.add(title);}
@@ -82,7 +82,7 @@ assert(homepage.includes('href="/guides/swap-btc-to-eth/"'),'Pair page not disco
 assert(homepage.includes('src="./widget.js"'),'Original widget hook must survive');
 assert(homepage.includes('src="./config.js"'),'Original affiliate config hook must survive');
 const i18n=html('i18n.js');
-assert(i18n.includes('Guides')&&i18n.includes('Русские инструкции'),'Missing locale switch for navigation');
+assert(i18n.includes('"Guides": "Инструкции"')&&i18n.includes('data-locale-fixed'),'Missing localized navigation logic');
 for(const asset of ['widget.js','i18n.js','config.js'])assert(fs.existsSync(path.join(root,asset)),asset+' missing');
 const guidePaths=expected.map(x=>x[0]);
 assert.equal(new Set(guidePaths).size,expected.length,'Physical file path collision');
