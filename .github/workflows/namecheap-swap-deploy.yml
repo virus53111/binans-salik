@@ -38,6 +38,7 @@ jobs:
           THORCHAIN_AFFILIATE_KEY="$(printf '%064d' 0)" node swap/build.cjs
           test -s swap/dist/index.html
           test -s swap/dist/config.js
+          node swap/seo-test.cjs
   deploy:
     needs: validate
     if: >-
