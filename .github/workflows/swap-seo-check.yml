@@ -1,0 +1,36 @@
+name: Swap SEO Static Build Checks
+on:
+  pull_request:
+    paths:
+      - 'swap/**'
+      - '.github/workflows/swap-seo-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'swap/**'
+      - '.github/workflows/swap-seo-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate SEO scripts
+        run: |
+          node --check swap/seo-pages.cjs
+          node --check swap/build.cjs
+          node --check swap/seo-test.cjs
+          node --check swap/i18n.js
+          node --check swap/widget.js
+      - name: Build isolated artifact with dummy public test identifier
+        env:
+          THORCHAIN_AFFILIATE_KEY: '0000000000000000000000000000000000000000000000000000000000000000'
+        run: node swap/build.cjs
+      - name: Validate all search-indexable pages
+        run: node swap/seo-test.cjs
