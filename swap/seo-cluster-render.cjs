@@ -9,6 +9,7 @@ const added=[
  ...require('./seo-safety.cjs')
 ];
 const base='https://murdilimax-swap.com';
+const buyURL='https://www.bybit.com/invite?ref=XV9EBA&medium=referral&utm_campaign=evergreen';
 const existing=[
  {slug:'how-cross-chain-swaps-work',category:'howto',
   en:{h1:'How cross-chain crypto swaps work',description:'Understand cross-chain swaps, wallet authorization, fees and settlement before using an external provider.'},
@@ -28,7 +29,7 @@ const words={
   research:'Official sources',steps:'Checklist before swapping',faq:'Frequently asked questions',related:'Related reading',
   date:'Updated 15 November 2026',disclose:'Murdilimax is an independent interface for an externally hosted THORChain swap widget. The external provider handles rates, wallet connection and execution. This content is educational, not financial advice. Funds can be lost and routes can be unavailable. Never share your seed phrase.',
   note:'The examples here are educational, not live executable quotes.',
-  footer:'Browse the guide library',trade:'Open the swap interface'},
+  footer:'Browse the guide library',trade:'Open the swap interface',buy:'Buy crypto on Bybit',buyNote:'External service · Referral link · Availability varies by location'},
  ru:{home:'Обмен криптовалют',hub:'Все 15 статей',pair:'Направления обмена',howto:'Инструкции',safety:'Комиссии и безопасность',
   title:'Инструкции по обмену BTC, ETH, USDT, USDC | Murdilimax',
   intro:'15 полезных инструкций по обмену криптовалют: направления, кошельки, комиссии сетей, выбор токена и проверка задержанных переводов.',
@@ -37,7 +38,7 @@ const words={
   research:'Официальные источники',steps:'Что проверить перед обменом',faq:'Частые вопросы',related:'Похожие материалы',
   date:'Обновлено 15 ноября 2026 года',disclose:'Murdilimax — независимый интерфейс к внешнему виджету THORChain. Курс, подключение кошелька и выполнение транзакций обеспечивает внешний поставщик. Материал справочный и не является инвестиционной рекомендацией. Возможны потери и недоступность маршрутов. Никому не передавайте seed-фразу.',
   note:'Статьи объясняют обмен, но не заменяют реальную котировку.',
-  footer:'Все инструкции',trade:'Перейти к обмену'}
+  footer:'Все инструкции',trade:'Перейти к обмену',buy:'Купить криптовалюту на Bybit',buyNote:'Сторонний сервис · Партнёрская ссылка · Доступность зависит от страны'}
 };
 const assetFlows={
  'swap-btc-to-eth':['BTC · Bitcoin','ETH · Ethereum'],
@@ -62,11 +63,15 @@ function meta(lang,title,description,route,kind){
  '<meta property="og:type" content="'+(kind==='article'?'article':'website')+'"><meta property="og:site_name" content="Murdilimax Swap"><meta property="og:title" content="'+escape(title)+'"><meta property="og:description" content="'+escape(description)+'"><meta property="og:url" content="'+escape(base+route)+'"><meta name="twitter:card" content="summary">'+
  '<script type="application/ld+json">'+JSON.stringify(schema).replace(/</g,'\\u003c')+'</script><style>'+css+'</style>';
 }
+function bybitLink(lang,asButton=false){
+ const l=words[lang];
+ return '<a class="'+(asButton?'button buy-external':'buy-external')+'" href="'+escape(buyURL)+'" target="_blank" rel="sponsored noopener noreferrer">'+escape(l.buy)+' ↗</a>';
+}
 function shell(lang,title,description,route,body,kind){
  const l=words[lang],other=lang==='ru'?'en':'ru',otherUrl=route.startsWith('/ru/')?route.replace(/^\/ru/,''):'/ru'+route;
  return '<!doctype html><html lang="'+lang+'"><head>'+meta(lang,title,description,route,kind)+'</head><body>'+
  '<header class="top"><nav class="wrap nav" aria-label="Site navigation"><a class="brand" href="/">◈ MURDILIMAX SWAP</a>'+
- '<a href="/#swap-widget">'+escape(l.home)+'</a><a href="'+url(lang)+'">'+escape(l.hub)+'</a><a href="'+otherUrl+'" hreflang="'+other+'">'+(lang==='ru'?'English':'Русский')+'</a></nav></header>'+
+ '<a href="/#swap-widget">'+escape(l.home)+'</a><a href="'+url(lang)+'">'+escape(l.hub)+'</a>'+bybitLink(lang)+'<a href="'+otherUrl+'" hreflang="'+other+'">'+(lang==='ru'?'English':'Русский')+'</a></nav></header>'+
  body+'<footer><div class="wrap"><p>'+escape(l.disclose)+'</p><a href="'+url(lang)+'">'+escape(l.footer)+'</a> · <a href="/#swap-widget">'+escape(l.trade)+'</a></div></footer></body></html>';
 }
 function card(lang,g){
@@ -82,17 +87,17 @@ function article(lang,g){
  const refs='<section class="divider"><h2>'+escape(l.research)+'</h2><ul class="refs">'+g.sources.map(p=>'<li><a target="_blank" rel="noopener noreferrer" href="'+escape(p[1])+'">'+escape(p[0])+'</a></li>').join('')+'</ul></section>';
  const relatives=all.filter(x=>x.slug!==g.slug&&x.category===g.category).slice(0,4);
  const related='<section class="divider"><h2>'+escape(l.related)+'</h2><div class="cards">'+relatives.map(x=>card(lang,x)).join('')+'</div><p><a href="'+url(lang)+'">'+escape(l.hub)+'</a></p></section>';
- const hero='<header class="hero"><p class="eyebrow">'+escape(cat(lang,g.category))+' · '+escape(l.date)+'</p><h1>'+escape(d.h1)+'</h1><p class="intro">'+escape(d.lead)+'</p>'+flow+'<a class="button" href="/#swap-widget">'+escape(l.cta)+'</a><p class="quiet">'+escape(l.note)+'</p></header>';
- const closing='<aside class="panel"><h2>'+escape(l.trade)+'</h2><p>'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a></aside>';
+ const hero='<header class="hero"><p class="eyebrow">'+escape(cat(lang,g.category))+' · '+escape(l.date)+'</p><h1>'+escape(d.h1)+'</h1><p class="intro">'+escape(d.lead)+'</p>'+flow+'<a class="button" href="/#swap-widget">'+escape(l.cta)+'</a> '+bybitLink(lang,true)+'<p class="quiet">'+escape(l.buyNote)+'</p></header>';
+ const closing='<aside class="panel"><h2>'+escape(l.trade)+'</h2><p>'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a> '+bybitLink(lang,true)+'<p class="quiet">'+escape(l.buyNote)+'</p></aside>';
  const body='<main class="article">'+hero+secs+checks+faq+refs+closing+related+'</main>';
  return shell(lang,d.title,d.description,url(lang,g.slug),body,'article');
 }
 function hub(lang){
  const l=words[lang];
  const body='<main class="hub"><header class="hero"><p class="eyebrow">MURDILIMAX SWAP · '+escape(l.date)+'</p><h1>'+escape(l.intro)+'</h1>'+
- '<p class="intro">'+escape(l.lead)+'</p><p class="note">'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a></header>'+
+ '<p class="intro">'+escape(l.lead)+'</p><p class="note">'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a> '+bybitLink(lang,true)+'<p class="quiet">'+escape(l.buyNote)+'</p></header>'+
  ['pairs','howto','safety'].map(g=>'<section class="hubsection"><h2>'+escape(cat(lang,g))+'</h2><div class="cards">'+all.filter(x=>x.category===g).map(x=>card(lang,x)).join('')+'</div></section>').join('')+
- '<aside class="panel"><h2>'+escape(l.trade)+'</h2><p>'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a></aside></main>';
+ '<aside class="panel"><h2>'+escape(l.trade)+'</h2><p>'+escape(l.disclose)+'</p><a class="button" href="/#swap-widget">'+escape(l.cta)+'</a> '+bybitLink(lang,true)+'<p class="quiet">'+escape(l.buyNote)+'</p></aside></main>';
  return shell(lang,l.title,l.intro,url(lang),body,'collection');
 }
 function writeSEOCluster(outputDir){
