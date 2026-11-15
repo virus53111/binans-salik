@@ -101,12 +101,12 @@
 
   function changeLanguage(lang) {
     document.documentElement.lang = lang;
-    document.title = lang === "ru" ? "Murdilimax — обмен криптовалют" : "Murdilimax — Cross-chain crypto swaps";
+    document.title = lang === "ru" ? "Обмен криптовалют через THORChain | Murdilimax Swap" : "Cross-Chain Crypto Swap Interface | Murdilimax Swap";
     document.querySelector('meta[name="description"]')?.setAttribute(
       "content",
       lang === "ru"
-        ? "Murdilimax Swap — обмен криптовалют через официальный виджет THORChain с подключением кошелька."
-        : "Murdilimax Swap — a non-custodial crypto swap interface powered by the official THORChain widget."
+        ? "Murdilimax Swap — некастодиальный интерфейс обмена криптовалют. Проверяйте курс, комиссии и подтверждайте операцию в виджете THORChain."
+        : "Explore non-custodial cross-chain crypto swaps with Murdilimax. Review quotes, network fees and wallet approval in the THORChain widget before swapping."
     );
 
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -145,7 +145,7 @@
 
   function init() {
     for (const lang of ["ru","en"]) controls[lang]?.addEventListener("click",()=>changeLanguage(lang));
-    let stored="ru";
+    let stored="en";
     try {
       const value=window.localStorage.getItem("murdilimax_swap_language");
       if (value==="ru" || value==="en") stored=value;

@@ -21,4 +21,6 @@ fs.writeFileSync(
   "window.MURDILIMAX_AFFILIATE_KEY = " + JSON.stringify(partnerKey) + ";\n"
 );
 fs.writeFileSync(path.join(outputDir, ".nojekyll"), "");
+// Generate the sitemap, robots.txt and real bilingual informational pages.
+require("./seo-pages.cjs").writeSEOPages(outputDir);
 console.log("Murdilimax Swap static bundle generated (API key masked).");
