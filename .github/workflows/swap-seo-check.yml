@@ -24,6 +24,11 @@ jobs:
       - name: Validate SEO scripts
         run: |
           node --check swap/seo-pages.cjs
+          node --check swap/seo-cluster-render.cjs
+          node --check swap/seo-pairs-a.cjs
+          node --check swap/seo-pairs-b.cjs
+          node --check swap/seo-howto.cjs
+          node --check swap/seo-safety.cjs
           node --check swap/build.cjs
           node --check swap/seo-test.cjs
           node --check swap/i18n.js
