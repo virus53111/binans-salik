@@ -1,13 +1,13 @@
-// Regression test of the 15-topic EN/RU static SEO bundle. No live money or real API keys.
+// Regression test of the 16-topic EN/RU static SEO bundle. No live money or real API keys.
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {added,all}=require('./seo-cluster-render.cjs');
 const root=path.join(__dirname,'dist'),base='https://murdilimax-swap.com';
 const html=p=>fs.readFileSync(path.join(root,p),'utf8');
-assert.equal(all.length,15,'Exactly 15 original article intents');
-assert.equal(added.length,13,'Exactly 13 newly researched articles');
-assert.equal(new Set(all.map(g=>g.slug)).size,15,'No repeated slugs');
+assert.equal(all.length,16,'Exactly 16 original article intents');
+assert.equal(added.length,14,'Exactly 14 newly researched articles');
+assert.equal(new Set(all.map(g=>g.slug)).size,all.length,'No repeated slugs');
 assert.deepEqual(all.reduce((map,g)=>(map[g.category]=(map[g.category]||0)+1,map),{}),
- {howto:5,safety:4,pairs:6},'Expected useful mix: 6 pairs, 5 instructions, 4 safety');
+ {howto:5,safety:5,pairs:6},'Expected useful mix: 6 pairs, 5 instructions, 5 safety');
 const expected=[
  ['index.html',base+'/','en'],
  ['ru/index.html',base+'/ru/','ru'],
@@ -40,14 +40,14 @@ for(const [file,url,lang] of expected){
  if(file!=='index.html'&&file!=='ru/index.html'){assert(!descriptions.has(description),'Duplicate metadata '+description);descriptions.add(description);}
  assert(sitemap.includes('<loc>'+url+'</loc>'),'URL absent from XML sitemap '+url);
  // New bilingual pages and hubs have in-document cross-language links.
- if(file.includes('guides/')){
+ {
   assert(page.includes('hreflang="en"'),'Missing EN alternate '+file);
   assert(page.includes('hreflang="ru"'),'Missing RU alternate '+file);
  }
 }
-assert.equal((sitemap.match(/<loc>/g)||[]).length,34,'Sitemap must describe exactly 34 canonical URLs');
-assert.equal((sitemap.match(/hreflang="ru"/g)||[]).length,34,'All XML sitemap URLs must include RU alternates');
-assert.equal((sitemap.match(/hreflang="en"/g)||[]).length,34,'All XML sitemap URLs must include EN alternates');
+assert.equal((sitemap.match(/<loc>/g)||[]).length,36,'Sitemap must describe exactly 36 canonical URLs');
+assert.equal((sitemap.match(/hreflang="ru"/g)||[]).length,36,'All XML sitemap URLs must include RU alternates');
+assert.equal((sitemap.match(/hreflang="en"/g)||[]).length,36,'All XML sitemap URLs must include EN alternates');
 assert(sitemap.includes('xmlns:xhtml="http://www.w3.org/1999/xhtml"'));
 assert(html('robots.txt').includes('Sitemap: '+base+'/sitemap.xml'));
 assert(!/Disallow:\s*\//.test(html('robots.txt')),'Robots.txt accidentally blocks site');
@@ -91,4 +91,4 @@ assert(i18n.includes('"Buy crypto on Bybit": "Купить криптовалю�
 for(const asset of ['widget.js','i18n.js','config.js'])assert(fs.existsSync(path.join(root,asset)),asset+' missing');
 const guidePaths=expected.map(x=>x[0]);
 assert.equal(new Set(guidePaths).size,expected.length,'Physical file path collision');
-console.log('PASS: 15 distinct EN/RU topics, 34 canonical pages, hubs, sources, security content, current widget, hreflang, sitemap, mobile layout and 6/5/4 topic mix.');
+console.log('PASS: 16 distinct EN/RU topics, 36 canonical pages, hubs, sources, security content, current widget, hreflang, sitemap, mobile layout and 6/5/5 topic mix.');

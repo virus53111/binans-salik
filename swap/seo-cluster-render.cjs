@@ -6,7 +6,8 @@ const added=[
  ...require('./seo-pairs-a.cjs'),
  ...require('./seo-pairs-b.cjs'),
  ...require('./seo-howto.cjs'),
- ...require('./seo-safety.cjs')
+ ...require('./seo-safety.cjs'),
+ require('./seo-refunds.cjs')
 ];
 const base='https://murdilimax-swap.com';
 const buyURL='https://www.bybit.com/invite?ref=XV9EBA&medium=referral&utm_campaign=evergreen';
@@ -19,20 +20,20 @@ const existing=[
   ru:{h1:'Комиссии, проскальзывание и безопасность обмена',description:'Какие комиссии бывают при обмене криптовалют и как защитить кошелёк.'}}
 ];
 const all=[...existing,...added];
-if(added.length!==13||all.length!==15||new Set(all.map(x=>x.slug)).size!==15)throw Error('Expected exactly 15 non-duplicated topics');
+if(new Set(all.map(x=>x.slug)).size!==all.length)throw Error('Duplicate guide topics');
 const words={
- en:{home:'Swap interface',hub:'All 15 guides',pair:'Swap directions',howto:'Instructions',safety:'Fees and safety',
+ en:{home:'Swap interface',hub:'All crypto swap guides',pair:'Swap directions',howto:'Instructions',safety:'Fees and safety',
   title:'Crypto Swap Guides: BTC, ETH, USDT, USDC | Murdilimax',
-  intro:'15 practical crypto swap guides: routes, wallet approvals, network fees, chain selection and ways to identify a delayed transaction.',
+  intro:'Practical crypto swap guides: routes, wallet approvals, network fees, chain selection and ways to identify a delayed transaction.',
   lead:'Learn before sending. Live quotes, rates and the availability of each swap route are determined by the external provider, not these articles.',
   cta:'Check the live swap quote',route:'Illustrative route only; availability is not guaranteed.',
   research:'Official sources',steps:'Checklist before swapping',faq:'Frequently asked questions',related:'Related reading',
   date:'Updated 15 November 2026',disclose:'Murdilimax is an independent interface for an externally hosted THORChain swap widget. The external provider handles rates, wallet connection and execution. This content is educational, not financial advice. Funds can be lost and routes can be unavailable. Never share your seed phrase.',
   note:'The examples here are educational, not live executable quotes.',
   footer:'Browse the guide library',trade:'Open the swap interface',buy:'Buy crypto on Bybit',buyNote:'External service · Referral link · Availability varies by location'},
- ru:{home:'Обмен криптовалют',hub:'Все 15 статей',pair:'Направления обмена',howto:'Инструкции',safety:'Комиссии и безопасность',
+ ru:{home:'Обмен криптовалют',hub:'Все инструкции',pair:'Направления обмена',howto:'Инструкции',safety:'Комиссии и безопасность',
   title:'Инструкции по обмену BTC, ETH, USDT, USDC | Murdilimax',
-  intro:'15 полезных инструкций по обмену криптовалют: направления, кошельки, комиссии сетей, выбор токена и проверка задержанных переводов.',
+  intro:'Практические инструкции по обмену криптовалют: направления, кошельки, комиссии сетей, выбор токена и проверка задержанных переводов.',
   lead:'Разберитесь до отправки монет. Текущий курс и доступность каждого маршрута показывает внешний поставщик, а не эти статьи.',
   cta:'Проверить актуальный обмен',route:'Направление приведено как пример. Его текущая доступность не гарантируется.',
   research:'Официальные источники',steps:'Что проверить перед обменом',faq:'Частые вопросы',related:'Похожие материалы',
@@ -110,7 +111,7 @@ function writeSEOCluster(outputDir){
  // The root English page and Russian overview already exist in the previous build step.
  const entries=['/','/ru/','/guides/','/ru/guides/'];
  for(const g of all)entries.push(url('en',g.slug),url('ru',g.slug));
- if(entries.length!==34||new Set(entries).size!==34)throw Error('Duplicate canonical URLs');
+ if(new Set(entries).size!==entries.length)throw Error('Duplicate canonical URLs');
  const xml=s=>escape(s);
  const sitemap='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'+
  entries.map(route=>{
@@ -122,6 +123,6 @@ function writeSEOCluster(outputDir){
  }).join('\n')+'\n</urlset>\n';
  write('sitemap.xml',sitemap);
  write('robots.txt','User-agent: *\nAllow: /\n\nSitemap: '+base+'/sitemap.xml\n');
- console.log('SEO CLUSTER: 15 topics in both languages, 2 hubs, 34 canonical URLs');
+ console.log('SEO cluster: '+all.length+' bilingual topics, '+entries.length+' canonical URLs');
 }
 module.exports={writeSEOCluster,added,all};
