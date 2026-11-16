@@ -13,7 +13,7 @@ if (!/^[0-9a-f]{64}$/i.test(partnerKey)) {
   process.exit(1);
 }
 fs.mkdirSync(outputDir, { recursive: true });
-for (const name of ["index.html", "widget.js", "i18n.js"]) {
+for (const name of ["index.html", "widget.js", "i18n.js", "yandex_1aa9b2313e300d52.html"]) {
   fs.copyFileSync(path.join(sourceDir, name), path.join(outputDir, name));
 }
 fs.writeFileSync(
