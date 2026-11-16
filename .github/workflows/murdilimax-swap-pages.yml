@@ -1,9 +1,9 @@
-name: Publish Murdilimax Swap Preview
+name: Publish Murdilimax Swap to GitHub Pages
 on:
   push:
     branches: [main]
     paths:
-      - 'index.html'
+      - 'swap/**'
       - '.github/workflows/murdilimax-swap-pages.yml'
   workflow_dispatch:
 permissions:
@@ -11,30 +11,45 @@ permissions:
   pages: write
   id-token: write
 concurrency:
-  group: 'murdilimax-swap-pages'
+  group: murdilimax-swap-pages
   cancel-in-progress: false
 jobs:
   deploy:
+    name: Build and deploy the production swap site
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Prepare isolated site artifact
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build real swap site
+        shell: bash
+        env:
+          THORCHAIN_AFFILIATE_KEY: ${{ secrets.THORCHAIN_AFFILIATE_KEY }}
         run: |
-          mkdir -p ./_site
-          cp index.html ./_site/index.html
-          touch ./_site/.nojekyll
+          set -euo pipefail
+          node --check swap/widget.js
+          node --check swap/i18n.js
+          node swap/build.cjs
+          node swap/seo-test.cjs
+          test -s swap/dist/index.html
+          test -s swap/dist/config.js
+          test -s swap/dist/sitemap.xml
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Upload site
+      - name: Upload website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
-      - name: Publish
+          path: swap/dist
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
